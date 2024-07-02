@@ -7,10 +7,10 @@
 
 import UIKit
 
-class MainView: UIView {
+class CategoryView: UIView {
     let welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome to Home!"
+        label.text = "김리인"
         label.textAlignment = .center
         return label
     }()
@@ -22,7 +22,6 @@ class MainView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupUI()
     }
     
     private func setupUI() {

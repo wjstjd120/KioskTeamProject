@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+class HomeController: UIViewController {
     override func loadView() {
-        self.view = MainView()
+        self.view = HomeView()
     }
     
     override func viewDidLoad() {
