@@ -20,6 +20,7 @@ class HomeView: UIView {
         super.init(frame: frame)
         
         CreateSegment()
+        shoppingView()
     }
     
     required init?(coder: NSCoder) {
@@ -51,5 +52,41 @@ class HomeView: UIView {
             
         }
         
+    }
+    var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
+    
+    private func shoppingView() { // 테이블뷰의 레이아웃
+        self.addSubview(basketView)
+        
+        basketView.snp.makeConstraints{
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-100) // 하단으로부터 100만큼 띄어서 오토레이아웃 설정
+            $0.height.equalTo(200) // 높이 400으로 설정
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        setupTableDataSource()
+    }
+    private func setupTableView() {
+        shoppingView()
+        self.addSubview(basketView)
+    }
+    private func setupTableDataSource() {
+        basketView.dataSource = self
+        basketView.delegate = self
+    }
+}
+
+extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDataSource 셀에서 어떻게 보여줄지 나타내는 프로토콜
+    //UITableViewDelegate는 셀이 눌렸을때 이벤트를 실행하므로 제거
+    //func tableView(tableView:, numberOfRowsInSection ) -> 셀을 보여줄 갯수를 정하는 곳
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.backgroundColor = .white
+        return cell
     }
 }
