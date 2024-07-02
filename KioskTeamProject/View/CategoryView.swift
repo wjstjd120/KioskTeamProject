@@ -30,5 +30,8 @@ class CategoryView: UIView {
         welcomeLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        
     }
+
 }
