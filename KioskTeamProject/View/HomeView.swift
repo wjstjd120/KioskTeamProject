@@ -24,7 +24,7 @@ class HomeView: UIView {
         CreateSegment()
         shoppingView()
 
-        button = Button(parentView: self)
+        button = Button(containerView: self)
         setupBtns()
 
     }

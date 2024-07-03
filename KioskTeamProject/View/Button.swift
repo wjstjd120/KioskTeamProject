@@ -9,10 +9,10 @@ import UIKit
 import SnapKit
 
 class Button {
-    let parentView: UIView
+    let containerView: UIView
 
-    init(parentView: UIView) {
-        self.parentView = parentView
+    init(containerView: UIView) {
+        self.containerView = containerView
     }
 
     func makeButtons() {
@@ -22,6 +22,7 @@ class Button {
         deleteButton.backgroundColor = .systemBlue
         deleteButton.setTitleColor(.white, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
+        deleteButton.layer.cornerRadius = 10
 
         // 구매 버튼
         let purchaseButton = UIButton(type: .system)
@@ -29,15 +30,16 @@ class Button {
         purchaseButton.backgroundColor = .white
         purchaseButton.setTitleColor(.black, for: .normal)
         purchaseButton.addTarget(self, action: #selector(purchaseBtnTapped), for: .touchUpInside)
+        purchaseButton.layer.cornerRadius = 10
 
-        parentView.addSubview(deleteButton)
-        parentView.addSubview(purchaseButton)
+        containerView.addSubview(deleteButton)
+        containerView.addSubview(purchaseButton)
 
         // 전체 삭제 버튼 제약 조건 설정
         deleteButton.snp.makeConstraints {
             $0.width.equalTo(150)
             $0.height.equalTo(50)
-            $0.top.equalTo(parentView.snp.bottom).inset(110)
+            $0.top.equalTo(containerView.snp.bottom).inset(110)
             $0.leading.equalToSuperview().offset(20)
         }
 
@@ -45,22 +47,22 @@ class Button {
         purchaseButton.snp.makeConstraints {
             $0.width.equalTo(150)
             $0.height.equalTo(50)
-            $0.top.equalTo(parentView.snp.bottom).inset(110)
+            $0.top.equalTo(containerView.snp.bottom).inset(110)
             $0.trailing.equalToSuperview().offset(-20)
         }
     }
 
     @objc func deleteBtnTapped() {
         print("삭제버튼")
-        if let parentViewController = parentView.next as? UIViewController {
-            makeAlert(title: "전체삭제", message: "장바구니의 모든 항목을 삭제하시겠습니까?", viewController: parentViewController)
+        if let containerVC = containerView.next as? UIViewController {
+            makeAlert(title: "전체삭제", message: "장바구니의 모든 항목을 삭제하시겠습니까?", viewController: containerVC)
         }
     }
 
     @objc func purchaseBtnTapped() {
         print("구매버튼")
-        if let parentViewController = parentView.next as? UIViewController {
-            makeAlert(title: "구매하기", message: "구매하시겠습니까?", viewController: parentViewController)
+        if let containerVC = containerView.next as? UIViewController {
+            makeAlert(title: "구매하기", message: "구매하시겠습니까?", viewController: containerVC)
         }
     }
 
