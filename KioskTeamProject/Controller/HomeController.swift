@@ -11,11 +11,16 @@ import SnapKit
 class HomeController: UIViewController {
     override func loadView() {
         self.view = HomeView()
+
+        let homeView = HomeView()
+                view.addSubview(homeView)
+        homeView.setupBtns()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
     }
 }
 

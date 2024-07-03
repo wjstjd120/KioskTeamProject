@@ -9,20 +9,26 @@ import UIKit
 import SnapKit
 
 class HomeView: UIView {
+    
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "전성진"
         label.textAlignment = .center
         return label
     }()
-    
+    private var button: Button!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         CreateSegment()
         shoppingView()
+
+        button = Button(containerView: self)
+        setupBtns()
+
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -75,6 +81,9 @@ class HomeView: UIView {
         basketView.dataSource = self
         basketView.delegate = self
     }
+    internal func setupBtns() {
+        button.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
+    }
 }
 
 extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDataSource 셀에서 어떻게 보여줄지 나타내는 프로토콜
@@ -83,17 +92,6 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
-    //    UITableViewDataSource에서 스와아프로 삭제하는 법
-    
-    //    if editingStyle == .delete {
-    //            데이터배열.remove(at: indexPath.row)
-    //            tableView.deleteRows(at: [indexPath], with: .fade)
-    //
-    //        } else if editingStyle == .insert {
-    //        }
-    //    }
-    
-    
     //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: customCellView.customCelld, for: indexPath) as! customCellView
@@ -101,3 +99,4 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
         return cell
     }
 }
+
