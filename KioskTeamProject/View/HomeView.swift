@@ -9,7 +9,11 @@ import UIKit
 import SnapKit
 
 class HomeView: UIView {
+    
     // 안녕하세요
+    
+    let item = ["모든 카테고리", "액션", "로맨스", "공포"]
+    let segmentControlss =  UISegmentedControl(items: item)
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "전성진"
@@ -37,20 +41,19 @@ class HomeView: UIView {
     
     private func CreateSegment() {
         
-        let item = ["모든 카테고리", "액션", "로맨스", "공포"]
-        let segmentControl =  UISegmentedControl(items: item)
         
-        segmentControl.selectedSegmentIndex = 3
         
-        segmentControl.backgroundColor = .white
-        segmentControl.selectedSegmentTintColor = .gray
+        segmentControlss.selectedSegmentIndex = 3
         
-        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
-        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentControlss.backgroundColor = .white
+        segmentControlss.selectedSegmentTintColor = .gray
         
-        self.addSubview(segmentControl)
+        segmentControlss.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        segmentControlss.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentControlss.addTarget(self, action:#selector(segmentChanged(_:)) , for: .valueChanged)
+        self.addSubview(segmentControlss)
         
-        segmentControl.snp.makeConstraints{
+        segmentControlss.snp.makeConstraints{
             
             $0.height.equalTo(30)
             $0.top.equalTo(self).offset(110)
@@ -100,5 +103,7 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
         cell.custonlayout()
         return cell
     }
+    //성진님 도와주세여......
+
 }
 
