@@ -10,7 +10,7 @@ import UIKit
 struct Book {
     let title: String
     let code: String
-    let price: Double
+    let price: Int
     let image: UIImage
     let category: String
     
