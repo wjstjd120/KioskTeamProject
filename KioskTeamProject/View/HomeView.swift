@@ -9,61 +9,49 @@ import UIKit
 import SnapKit
 
 class HomeView: UIView {
+    weak var delegate: HomeViewDelegate?
     
-    // 안녕하세요
-    
-    let item = ["모든 카테고리", "액션", "로맨스", "공포"]
-    let segmentControlss =  UISegmentedControl(items: item)
-    let welcomeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "전성진"
-        label.textAlignment = .center
-        return label
+    let segmentControl: UISegmentedControl = {
+        let item = ["모든 카테고리", "액션", "로맨스", "공포"]
+        let segmentControl = UISegmentedControl(items: item)
+        
+        segmentControl.selectedSegmentIndex = 3
+        segmentControl.backgroundColor = .white
+        segmentControl.selectedSegmentTintColor = .gray
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        
+        return segmentControl
     }()
-    private var button: Button!
     
+    private var button: Button!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        CreateSegment()
+        createSegment()
         shoppingView()
-
+        setupCollectionDataSource()
         button = Button(containerView: self)
         setupBtns()
-
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    
-    private func CreateSegment() {
+
+    private func createSegment() {
+        self.addSubview(segmentControl)
         
-        
-        
-        segmentControlss.selectedSegmentIndex = 3
-        
-        segmentControlss.backgroundColor = .white
-        segmentControlss.selectedSegmentTintColor = .gray
-        
-        segmentControlss.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
-        segmentControlss.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        segmentControlss.addTarget(self, action:#selector(segmentChanged(_:)) , for: .valueChanged)
-        self.addSubview(segmentControlss)
-        
-        segmentControlss.snp.makeConstraints{
-            
+        segmentControl.snp.makeConstraints{
             $0.height.equalTo(30)
             $0.top.equalTo(self).offset(110)
             $0.trailing.equalTo(self).offset(-9)
             $0.leading.equalTo(self).offset(9)
-            
-            
         }
         
     }
+    
     var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
     
     private func shoppingView() { // 테이블뷰의 레이아웃
@@ -77,17 +65,43 @@ class HomeView: UIView {
         }
         setupTableDataSource()
     }
+    
     private func setupTableView() {
         shoppingView()
         self.addSubview(basketView)
     }
+    
     private func setupTableDataSource() {
         basketView.register(customCellView.self, forCellReuseIdentifier: customCellView.customCelld)
         basketView.dataSource = self
         basketView.delegate = self
     }
+    
     internal func setupBtns() {
         button.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
+    }
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }()
+    
+    // 컬렉션 뷰 세팅 메서드
+    private func setupCollectionDataSource() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        // 셀 identifier
+        collectionView.register(ContentsCell.self, forCellWithReuseIdentifier: "contentsCell")
+        
+        self.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentControl.snp.bottom).offset(0)
+            $0.centerX.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(5)
+            $0.bottom.equalTo(basketView.snp.top).offset(0)
+        }
     }
 }
 
@@ -107,3 +121,23 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
 
 }
 
+extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let count = delegate?.getListCount(category: "test") else { return 0 }
+        
+        return count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentsCell", for: indexPath) as! ContentsCell
+        cell.book = delegate?.getBook(at: indexPath.item)
+        cell.configure()
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: Int = Int(collectionView.bounds.width / 3) - 10
+        let height: Int = 160
+        return CGSize(width: width, height: height)
+    }
+}
