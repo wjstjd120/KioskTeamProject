@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14BBCB0C2C3530BD005F24D4 /* customCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BBCB0B2C3530BD005F24D4 /* customCellView.swift */; };
 		27B34E342C34F8070019C4A1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B34E332C34F8070019C4A1 /* Button.swift */; };
 		74A8AD002C33966800CA2C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8ACFF2C33966800CA2C08 /* AppDelegate.swift */; };
 		74A8AD022C33966800CA2C08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8AD012C33966800CA2C08 /* SceneDelegate.swift */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14BBCB0B2C3530BD005F24D4 /* customCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customCellView.swift; sourceTree = "<group>"; };
+
 		27B34E332C34F8070019C4A1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		74A8ACFC2C33966800CA2C08 /* KioskTeamProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KioskTeamProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A8ACFF2C33966800CA2C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				74A8AD192C339EC600CA2C08 /* HomeView.swift */,
+				14BBCB0B2C3530BD005F24D4 /* customCellView.swift */,
 				27B34E332C34F8070019C4A1 /* Button.swift */,
 			);
 			path = View;
@@ -181,6 +185,7 @@
 				27B34E342C34F8070019C4A1 /* Button.swift in Sources */,
 				74A8AD1C2C33A4D400CA2C08 /* Book.swift in Sources */,
 				74A8AD042C33966800CA2C08 /* HomeController.swift in Sources */,
+				14BBCB0C2C3530BD005F24D4 /* customCellView.swift in Sources */,
 				74A8AD1A2C339EC600CA2C08 /* HomeView.swift in Sources */,
 				74A8AD242C33E64400CA2C08 /* Basket.swift in Sources */,
 				74A8AD002C33966800CA2C08 /* AppDelegate.swift in Sources */,

@@ -77,6 +77,7 @@ class HomeView: UIView {
         self.addSubview(basketView)
     }
     private func setupTableDataSource() {
+        basketView.register(customCellView.self, forCellReuseIdentifier: customCellView.customCelld)
         basketView.dataSource = self
         basketView.delegate = self
     }
@@ -91,11 +92,10 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
-
     //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = .white
+        let cell = tableView.dequeueReusableCell(withIdentifier: customCellView.customCelld, for: indexPath) as! customCellView
+        cell.custonlayout()
         return cell
     }
 }
