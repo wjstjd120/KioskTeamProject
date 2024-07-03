@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class HomeView: UIView {
-    
+    // 안녕하세요
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "전성진"
@@ -17,7 +17,8 @@ class HomeView: UIView {
         return label
     }()
     private var button: Button!
-
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -35,26 +36,27 @@ class HomeView: UIView {
     
     
     private func CreateSegment() {
-        let segmentControl = UISegmentedControl()
-        let segmentTitles = ["All", "Action", "Romance", "Horror"]
         
-        for i in 0..<segmentTitles.count {
-            segmentControl.insertSegment(withTitle: segmentTitles[i], at: i, animated: false)
-        }
-        segmentControl.selectedSegmentIndex = 0
+        let item = ["모든 카테고리", "액션", "로맨스", "공포"]
+        let segmentControl =  UISegmentedControl(items: item)
+        
+        segmentControl.selectedSegmentIndex = 3
+        
         segmentControl.backgroundColor = .white
-        segmentControl.selectedSegmentTintColor = .systemRed
+        segmentControl.selectedSegmentTintColor = .gray
         
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
-        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.green], for: .selected)
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         
         self.addSubview(segmentControl)
         
         segmentControl.snp.makeConstraints{
-            $0.width.equalTo(380)
-            $0.height.equalTo(40)
-            $0.top.equalToSuperview().offset(110)
-            $0.centerX.equalToSuperview()
+            
+            $0.height.equalTo(30)
+            $0.top.equalTo(self).offset(110)
+            $0.trailing.equalTo(self).offset(-9)
+            $0.leading.equalTo(self).offset(9)
+            
             
         }
         
