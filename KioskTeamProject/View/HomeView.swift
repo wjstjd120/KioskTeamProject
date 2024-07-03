@@ -27,7 +27,7 @@ class HomeView: UIView {
         super.init(coder: coder)
     }
     
-   
+    
     private func CreateSegment() {
         let segmentControl = UISegmentedControl()
         let segmentTitles = ["All", "Action", "Romance", "Horror"]
@@ -71,6 +71,7 @@ class HomeView: UIView {
         self.addSubview(basketView)
     }
     private func setupTableDataSource() {
+        basketView.register(customCellView.self, forCellReuseIdentifier: customCellView.customCelld)
         basketView.dataSource = self
         basketView.delegate = self
     }
@@ -82,11 +83,21 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
+    //    UITableViewDataSource에서 스와아프로 삭제하는 법
+    
+    //    if editingStyle == .delete {
+    //            데이터배열.remove(at: indexPath.row)
+    //            tableView.deleteRows(at: [indexPath], with: .fade)
+    //
+    //        } else if editingStyle == .insert {
+    //        }
+    //    }
+    
     
     //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = .white
+        let cell = tableView.dequeueReusableCell(withIdentifier: customCellView.customCelld, for: indexPath) as! customCellView
+        cell.custonlayout()
         return cell
     }
 }
