@@ -23,16 +23,18 @@ class HomeView: UIView {
         
         return segmentControl
     }()
-    
+
+    private var logoImageView: UIImageView!
     private var buttonView: ButtonView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         //        self.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9058823529, blue: 0.6980392157, alpha: 1)
         self.backgroundColor = UIColor(hexCode: "FFDE95")
-        
+
+        makeLogoImage()
         createSegment()
-        shoppingView()
+        BasketView()
         setupCollectionDataSource()
         buttonView = ButtonView(containerView: self)
         buttonView.tableDelegate = self
@@ -42,13 +44,30 @@ class HomeView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+  
+    private func makeLogoImage() {
+           logoImageView = UIImageView()
+           logoImageView.image = UIImage(named: "logoImage")
+           logoImageView.contentMode = .scaleAspectFit
+           logoImageView.translatesAutoresizingMaskIntoConstraints = false
+
+           self.addSubview(logoImageView)
+
+           logoImageView.snp.makeConstraints {
+               $0.width.equalTo(300)
+               $0.top.equalTo(self).offset(60)
+               $0.centerX.equalTo(self)
+           }
+       }
+
     private func createSegment() {
+        guard let logoImageView = self.logoImageView else { return }
+
         self.addSubview(segmentControl)
-        
+
         segmentControl.snp.makeConstraints{
-            $0.height.equalTo(30)
-            $0.top.equalTo(self).offset(110)
+            $0.height.equalTo(40)
+            $0.top.equalTo(logoImageView.snp.bottom).offset(15)
             $0.trailing.equalTo(self).offset(-5)
             $0.leading.equalTo(self).offset(5)
         }
@@ -57,7 +76,7 @@ class HomeView: UIView {
     
     var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
     
-    private func shoppingView() { // 테이블뷰의 레이아웃
+    private func BasketView() { // 테이블뷰의 레이아웃
         self.addSubview(basketView)
         
         basketView.snp.makeConstraints{
@@ -70,7 +89,7 @@ class HomeView: UIView {
     }
     
     private func setupTableView() {
-        shoppingView()
+        BasketView()
         self.addSubview(basketView)
     }
     

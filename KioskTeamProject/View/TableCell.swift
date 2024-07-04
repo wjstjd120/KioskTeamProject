@@ -54,10 +54,10 @@ class TableCell: UITableViewCell {
         plusButton.layer.cornerRadius = 5
         plusButton.addTarget(self, action: #selector(plusButtonTap), for: .touchDown)
         plusButton.snp.makeConstraints{
-            $0.right.equalTo(-140)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(25)
             $0.height.equalTo(25)
-            $0.top.equalTo(self).offset(9)
+            $0.right.equalTo(nameLabel.snp.left).offset(230)
         }
         
         //마이너스 버튼
@@ -68,10 +68,10 @@ class TableCell: UITableViewCell {
         minusButton.layer.cornerRadius = 5
         minusButton.addTarget(self, action: #selector(minusButtonTap), for: .touchDown)
         minusButton.snp.makeConstraints{
-            $0.right.equalTo(-200)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(25)
             $0.height.equalTo(25)
-            $0.top.equalTo(self).offset(9)
+            $0.right.equalTo(nameLabel.snp.left).offset(160)
         }
         
         //삭제버튼
@@ -83,18 +83,18 @@ class TableCell: UITableViewCell {
         eliminationButton.layer.cornerRadius = 5
         eliminationButton.addTarget(self, action: #selector(eliminationButtonTap), for: .touchDown)
         eliminationButton.snp.makeConstraints{
-            $0.right.equalTo(0)
+            $0.right.equalToSuperview().offset(-10)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(25)
             $0.height.equalTo(25)
-            $0.top.equalTo(self).offset(9)
         }
         
         //갯수 레이블
         numberLabel.text = "\(numbers)"
         numberLabel.textColor = .black
         numberLabel.snp.makeConstraints{
-            $0.right.equalTo(-178)
-            $0.top.equalTo(self).offset(9)
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
         
         //금액 레이블
@@ -102,14 +102,19 @@ class TableCell: UITableViewCell {
         priceLabel.textColor = .black
         priceLabel.font = .systemFont(ofSize: 15)
         priceLabel.snp.makeConstraints{
+
             $0.right.equalTo(eliminationButton.snp.left).offset(-5)
             $0.centerY.equalToSuperview()
+            $0.right.equalTo(eliminationButton.snp.right).inset(30)
         }
         
         //이름 받아오는 레이블
         nameLabel.text = "\(basket!.book.title)"
         nameLabel.textColor = .black
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.snp.makeConstraints{
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().offset(10)
+        }
     }
     //플러스 버튼 숫자 증가
     @objc private func plusButtonTap(_ sender: UIButton) {
