@@ -15,7 +15,7 @@ class HomeView: UIView {
         let item = ["모든 카테고리", "액션", "로맨스", "공포"]
         let segmentControl = UISegmentedControl(items: item)
         
-        segmentControl.selectedSegmentIndex = 3
+        segmentControl.selectedSegmentIndex = 0
         segmentControl.backgroundColor = .white
         segmentControl.selectedSegmentTintColor = .gray
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
@@ -24,16 +24,22 @@ class HomeView: UIView {
         return segmentControl
     }()
     
+    var tempBooks: [Book] = BookInit.shared.list
+    var filteredBooks: [Book] = []
+    
     private var button: Button!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        filteredBooks = tempBooks
         
         createSegment()
         shoppingView()
         setupCollectionDataSource()
         button = Button(containerView: self)
         setupBtns()
+        
     }
 
     required init?(coder: NSCoder) {
@@ -49,7 +55,7 @@ class HomeView: UIView {
             $0.trailing.equalTo(self).offset(-9)
             $0.leading.equalTo(self).offset(9)
         }
-        
+        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
     
     var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
@@ -117,18 +123,20 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
         cell.custonlayout()
         return cell
     }
+    
+
 }
 
 extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = delegate?.getListCount(category: "test") else { return 0 }
         
-        return count
+        
+        return filteredBooks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentsCell", for: indexPath) as! ContentsCell
-        cell.book = delegate?.getBook(at: indexPath.item)
+        cell.book = filteredBooks[indexPath.item]
         cell.configure()
         return cell
     }
@@ -139,11 +147,30 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         return CGSize(width: width, height: height)
     }
     
+
+    @objc func segmentChanged(_ sender: UISegmentedControl){
+        switch sender.selectedSegmentIndex{
+        case 0: filteredBooks = tempBooks
+        
+        case 1: filteredBooks = tempBooks.filter{ $0.category == "Action" }
+         
+        case 2: filteredBooks = tempBooks.filter{$0.category == "Romance"}
+           
+        case 3: filteredBooks = tempBooks.filter{$0.category == "Horror"}
+           
+        default: break
+           
+        }
+        collectionView.reloadData()
+         
+      }
+
     // 책 클릭 이벤트 처리 메서드
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedBook = BookInit.shared.list[indexPath.item]
         // 장바구니에 추가하는 로직 호출
         BasketInit.shared.addBasket(Basket(amount: 1, book: selectedBook))
     }
-
 }
+
+
