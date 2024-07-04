@@ -109,7 +109,7 @@ class ButtonView {
         let purchaseAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "OK", style: .cancel) {_ in
-            let doubleAlert = UIAlertController(title: "구매완료", message: "구매가 완료 되었습니다.", preferredStyle: .alert)
+            let doubleAlert = UIAlertController(title: "확인", message: BasketInit.shared.getBasketsCount() == 0 ? "장바구니 항목이 없습니다." : "구매가 완료 되었습니다.", preferredStyle: .alert)
             
             let confirmAction = UIAlertAction(title: "확인", style: .destructive) {_ in
                 self.clearBasket()
