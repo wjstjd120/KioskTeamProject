@@ -23,14 +23,38 @@ class HomeView: UIView {
         
         return segmentControl
     }()
+    let basketContainer: UIView = {
+          var view = UIView()
+        view.backgroundColor = .gray
+        view.layer.cornerRadius = 10
+          return view
+        }()
 
     private var logoImageView: UIImageView!
     private var buttonView: ButtonView!
+    
+    let itemsCount = {
+        let x = UILabel()
+        x.text = ""
+        x.textAlignment = .left
+        return x
+    }()
+    let totalPrice = {
+        let x = UILabel()
+        x.text = ""
+        x.textAlignment = .right
+        x.textColor = .white
+        x.frame.size
+        return x
+    }()
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         //        self.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9058823529, blue: 0.6980392157, alpha: 1)
         self.backgroundColor = UIColor(hexCode: "FFDE95")
+        setupBasketContainer()
 
         makeLogoImage()
         createSegment()
@@ -59,6 +83,23 @@ class HomeView: UIView {
                $0.centerX.equalTo(self)
            }
        }
+    
+    private func setupBasketContainer() {
+          self.addSubview(basketContainer)
+           
+        basketContainer.snp.makeConstraints {
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-55)
+            $0.height.equalTo(230)
+            $0.leading.equalToSuperview().offset(5)
+            $0.trailing.equalToSuperview().offset(-5)
+          }
+           
+        basketContainer.addSubview(basketView)
+           
+          basketView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+          }
+        }
 
     private func createSegment() {
         guard let logoImageView = self.logoImageView else { return }
@@ -74,16 +115,20 @@ class HomeView: UIView {
         segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
     
-    var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
+    var basketView = {
+        var s = UITableView()
+        s.layer.cornerRadius = 10
+        return s
+    }()  // 테이블 뷰의 UITableView 변수 생성
     
     private func BasketView() { // 테이블뷰의 레이아웃
         self.addSubview(basketView)
         
         basketView.snp.makeConstraints{
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-100) // 하단으로부터 100만큼 띄어서 오토레이아웃 설정
-            $0.height.equalTo(200) // 높이 400으로 설정
-            $0.leading.equalToSuperview().offset(5)
-            $0.trailing.equalToSuperview().offset(-5)
+            $0.bottom.equalTo(basketContainer.snp.bottom).offset(-8) // 하단으로부터 100만큼 띄어서 오토레이아웃 설정
+            $0.height.equalTo(170) // 높이 400으로 설정
+            $0.leading.equalTo(basketContainer).offset(8)
+            $0.trailing.equalTo(basketContainer).offset(-8)
         }
         setupTableDataSource()
     }
@@ -121,10 +166,10 @@ class HomeView: UIView {
         self.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(segmentControl.snp.bottom).offset(0)
+            $0.top.equalTo(segmentControl.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.left.right.equalToSuperview().inset(5)
-            $0.bottom.equalTo(basketView.snp.top).offset(0)
+            $0.bottom.equalTo(basketContainer.snp.top).offset(-10)
         }
     }
 }
