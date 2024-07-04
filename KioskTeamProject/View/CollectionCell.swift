@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ContentsCell: UICollectionViewCell {
+class CollectionCell: UICollectionViewCell {
     var book: Book?
     
     lazy var titleImageView: UIImageView = {

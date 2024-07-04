@@ -5,7 +5,7 @@
 //  Created by 전성진 on 7/2/24.
 //
 struct Basket {
-    let amount: Int
+    var amount: Int
     let book: Book
 }
 
@@ -19,8 +19,24 @@ class BasketInit {
     func addBasket(_ basket: Basket) {
         baskets.append(basket)
     }
-        
+    
+    func plusAmount(_ index: Int) {
+        baskets[index].amount += 1
+    }
+    
+    func minusAmount(_ index: Int) {
+        baskets[index].amount -= 1
+    }
+    
     func getBaskets() -> [Basket] {
         return baskets
+    }
+    
+    func clearBaskets() {
+        baskets.removeAll()
+    }
+    
+    func removeBaskes(_ index: Int) {
+        baskets.remove(at: index)
     }
 }

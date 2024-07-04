@@ -27,7 +27,7 @@ class HomeView: UIView {
     var tempBooks: [Book] = BookInit.shared.list
     var filteredBooks: [Book] = []
     
-    private var button: Button!
+    private var buttonView: ButtonView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,9 +37,9 @@ class HomeView: UIView {
         createSegment()
         shoppingView()
         setupCollectionDataSource()
-        button = Button(containerView: self)
+        buttonView = ButtonView(containerView: self)
+        buttonView.tableDelegate = self
         setupBtns()
-        
     }
 
     required init?(coder: NSCoder) {
@@ -78,13 +78,13 @@ class HomeView: UIView {
     }
     
     private func setupTableDataSource() {
-        basketView.register(customCellView.self, forCellReuseIdentifier: customCellView.customCelld)
+        basketView.register(TableCell.self, forCellReuseIdentifier: TableCell.customCelld)
         basketView.dataSource = self
         basketView.delegate = self
     }
     
     internal func setupBtns() {
-        button.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
+        buttonView.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
     }
     
     let collectionView: UICollectionView = {
@@ -98,7 +98,7 @@ class HomeView: UIView {
         collectionView.delegate = self
         
         // 셀 identifier
-        collectionView.register(ContentsCell.self, forCellWithReuseIdentifier: "contentsCell")
+        collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
         
         self.addSubview(collectionView)
         
@@ -115,28 +115,33 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
     //UITableViewDelegate는 셀이 눌렸을때 이벤트를 실행하므로 제거
     //func tableView(tableView:, numberOfRowsInSection ) -> 셀을 보여줄 갯수를 정하는 곳
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return BasketInit.shared.getBaskets().count
     }
     //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: customCellView.customCelld, for: indexPath) as! customCellView
-        cell.custonlayout()
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableCell.customCelld, for: indexPath) as! TableCell
+        
+        cell.tableDelegate = self
+
+        if !BasketInit.shared.getBaskets().isEmpty {
+            cell.plusButton.tag = indexPath.item
+            cell.minusButton.tag = indexPath.item
+            cell.eliminationButton.tag = indexPath.item
+            cell.basket = BasketInit.shared.getBaskets()[indexPath.item]
+            cell.custonlayout()
+        }
         return cell
     }
-    
-
 }
 
 extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        
-        return filteredBooks.count
+        return BookInit.shared.getFilteredBooksCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentsCell", for: indexPath) as! ContentsCell
-        cell.book = filteredBooks[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentsCell", for: indexPath) as! CollectionCell
+        cell.book = BookInit.shared.filteredBooks[indexPath.item]
         cell.configure()
         return cell
     }
@@ -149,28 +154,27 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
     
 
     @objc func segmentChanged(_ sender: UISegmentedControl){
-        switch sender.selectedSegmentIndex{
-        case 0: filteredBooks = tempBooks
-        
-        case 1: filteredBooks = tempBooks.filter{ $0.category == "Action" }
-         
-        case 2: filteredBooks = tempBooks.filter{$0.category == "Romance"}
-           
-        case 3: filteredBooks = tempBooks.filter{$0.category == "Horror"}
-           
-        default: break
-           
-        }
+        BookInit.shared.setFilteredBooks(sender.selectedSegmentIndex)
         collectionView.reloadData()
          
       }
 
     // 책 클릭 이벤트 처리 메서드
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedBook = BookInit.shared.list[indexPath.item]
+        let selectedBook = BookInit.shared.filteredBooks[indexPath.item]
         // 장바구니에 추가하는 로직 호출
         BasketInit.shared.addBasket(Basket(amount: 1, book: selectedBook))
+        basketView.reloadData()
     }
 }
 
+extension HomeView: TableViewReloadDelegate {
+    func reloadTableView() {
+        basketView.reloadData()
+    }
+}
+
+protocol TableViewReloadDelegate: AnyObject {
+    func reloadTableView()
+}
 

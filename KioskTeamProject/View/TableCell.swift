@@ -8,7 +8,10 @@
 import UIKit
 import SnapKit
 
-class customCellView: UITableViewCell {
+class TableCell: UITableViewCell {
+    var basket: Basket?
+    
+    weak var tableDelegate: TableViewReloadDelegate?
     
     static let customCelld =  "custommcelld"
     
@@ -34,6 +37,8 @@ class customCellView: UITableViewCell {
     }
     
     func custonlayout() {
+        numbers = basket?.amount ?? 0
+        
         self.addSubview(plusButton)
         self.addSubview(minusButton)
         self.addSubview(eliminationButton)
@@ -94,7 +99,7 @@ class customCellView: UITableViewCell {
         }
         
         //금액 레이블
-        priceLabel.text = "가격 : \(numbers * 300)"
+        priceLabel.text = "가격 : \(numbers * Int(basket!.book.price))"
         priceLabel.textColor = .black
         priceLabel.font = .systemFont(ofSize: 15)
         priceLabel.snp.makeConstraints{
@@ -104,26 +109,29 @@ class customCellView: UITableViewCell {
         }
         
         //이름 받아오는 레이블
-        nameLabel.text = " "
+        nameLabel.text = "\(basket!.book.title)"
         nameLabel.textColor = .black
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     //플러스 버튼 숫자 증가
-    @objc private func plusButtonTap() {
-        self.numbers += 1
+    @objc private func plusButtonTap(_ sender: UIButton) {
         numberLabel.text = "\(numbers)"
+        BasketInit.shared.plusAmount(sender.tag)
+        tableDelegate?.reloadTableView()
     }
     //마이너스 버튼 숫자 감소
-    @objc private func minusButtonTap() {
+    @objc private func minusButtonTap(_ sender: UIButton) {
         if numbers == 0 {
             numbers = 0
         }else {
-            self.numbers -= 1
             numberLabel.text = "\(numbers)"
+            BasketInit.shared.minusAmount(sender.tag)
+            tableDelegate?.reloadTableView()
         }
     }
     //삭제버튼
-    @objc private func eliminationButtonTap() {
-        
+    @objc private func eliminationButtonTap(_ sender: UIButton) {
+        BasketInit.shared.removeBaskes(sender.tag)
+        tableDelegate?.reloadTableView()
     }
 }
