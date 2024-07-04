@@ -29,6 +29,9 @@ class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9058823529, blue: 0.6980392157, alpha: 1)
+
+
         createSegment()
         shoppingView()
         setupCollectionDataSource()

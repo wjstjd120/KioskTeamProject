@@ -20,22 +20,24 @@ class Button {
         // 전체 삭제 버튼
         let deleteButton = UIButton(type: .system)
         deleteButton.setTitle("전체삭제", for: .normal)
+        deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         deleteButton.backgroundColor = .clear
-        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.setTitleColor(UIColor(red: 217/255.0, green: 140/255.0, blue: 89/255.0, alpha: 1.0), for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         deleteButton.layer.cornerRadius = 20
         deleteButton.layer.borderWidth = 2
-        deleteButton.layer.borderColor = UIColor.white.cgColor
+        deleteButton.layer.borderColor = #colorLiteral(red: 0.8509803922, green: 0.5490196078, blue: 0.3490196078, alpha: 1)
 
         // 구매 버튼
         let purchaseButton = UIButton(type: .system)
         purchaseButton.setTitle("구매하기", for: .normal)
-        purchaseButton.backgroundColor = .white
-        purchaseButton.setTitleColor(.black, for: .normal)
+        purchaseButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        purchaseButton.backgroundColor =  #colorLiteral(red: 0.8509803922, green: 0.5490196078, blue: 0.3490196078, alpha: 1)
+        purchaseButton.setTitleColor(UIColor(red: 245/255.0, green: 231/255.0, blue: 178/255.0, alpha: 1.0), for: .normal)
         purchaseButton.addTarget(self, action: #selector(purchaseBtnTapped), for: .touchUpInside)
         purchaseButton.layer.cornerRadius = 20
-        purchaseButton.layer.borderWidth = 2
-        purchaseButton.layer.borderColor = UIColor.white.cgColor
+
+
 
         containerView.addSubview(deleteButton)
         containerView.addSubview(purchaseButton)
