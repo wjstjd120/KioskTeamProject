@@ -20,12 +20,6 @@ class BasketInit {
         baskets.append(basket)
     }
     
-    func removeBaskets(_ book: Book) {
-        if let index = baskets.firstIndex(where: { $0.code == book.code }) {
-            baskets.remove(at: index)
-        }
-    }
-    
     func getBaskets() -> [Basket] {
         return baskets
     }
