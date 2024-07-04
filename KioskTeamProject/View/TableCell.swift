@@ -98,13 +98,12 @@ class TableCell: UITableViewCell {
         }
         
         //금액 레이블
-        priceLabel.text = "가격 : \(numbers * Int(basket!.book.price))"
+        priceLabel.text = "\(numbers * Int(basket!.book.price)) 원"
         priceLabel.textColor = .black
         priceLabel.font = .systemFont(ofSize: 15)
         priceLabel.snp.makeConstraints{
-            $0.right.equalTo(-30)
-            $0.width.equalTo(100)
-            $0.top.equalTo(self).offset(14)
+            $0.right.equalTo(eliminationButton.snp.left).offset(-5)
+            $0.centerY.equalToSuperview()
         }
         
         //이름 받아오는 레이블
