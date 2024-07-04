@@ -10,7 +10,7 @@ import SnapKit
 
 class ButtonView {
     weak var tableDelegate: TableViewReloadDelegate?
-    
+
     var basketData = BasketInit.shared
     let containerView: UIView
 
@@ -22,22 +22,28 @@ class ButtonView {
         // 전체 삭제 버튼
         let deleteButton = UIButton(type: .system)
         deleteButton.setTitle("전체삭제", for: .normal)
+        deleteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         deleteButton.backgroundColor = .clear
         deleteButton.setTitleColor(UIColor(hexCode: "973131"), for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         deleteButton.layer.cornerRadius = 20
         deleteButton.layer.borderWidth = 2
-        deleteButton.layer.borderColor = UIColor.white.cgColor
+        deleteButton.layer.borderColor = UIColor(hexCode: "973131").cgColor
+        
+        // 그림자 속성적용
+        btnShadow(to: deleteButton)
 
         // 구매 버튼
         let purchaseButton = UIButton(type: .system)
         purchaseButton.setTitle("구매하기", for: .normal)
-        purchaseButton.backgroundColor = .white
-        purchaseButton.setTitleColor(.black, for: .normal)
+        purchaseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        purchaseButton.backgroundColor = UIColor(hexCode: "973131")
+        purchaseButton.setTitleColor(UIColor(hexCode: "FFDE95"), for: .normal)
         purchaseButton.addTarget(self, action: #selector(purchaseBtnTapped), for: .touchUpInside)
         purchaseButton.layer.cornerRadius = 20
-        purchaseButton.layer.borderWidth = 2
-        purchaseButton.layer.borderColor = UIColor.white.cgColor
+        
+        // 그림자 속성적용
+        btnShadow(to: purchaseButton)
 
         containerView.addSubview(deleteButton)
         containerView.addSubview(purchaseButton)
@@ -46,7 +52,7 @@ class ButtonView {
         deleteButton.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(40)
-            $0.top.equalTo(containerView.snp.bottom).inset(110)
+            $0.top.equalTo(containerView.snp.bottom).inset(70)
             $0.leading.equalToSuperview().offset(60)
         }
 
@@ -54,11 +60,19 @@ class ButtonView {
         purchaseButton.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(40)
-            $0.top.equalTo(containerView.snp.bottom).inset(110)
+            $0.top.equalTo(containerView.snp.bottom).inset(70)
             $0.trailing.equalToSuperview().offset(-60)
         }
     }
-    
+    //버튼 그림자 설정
+    func btnShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.masksToBounds = false
+        button.layer.shadowRadius = 4
+        button.layer.shadowOffset = CGSize(width: 1, height: 2)
+        button.layer.shadowOpacity = 0.5
+    }
+
     // 전체 삭제 버튼 액션
     @objc func deleteBtnTapped() {
         print("삭제버튼")
@@ -66,17 +80,16 @@ class ButtonView {
             deleteBtnAlert(title: "경고", message: "장바구니의 모든 항목을 비우시겠습니까?", viewController: containerVC)
         }
     }
+
     // 전체 삭제 버튼 alert
     func deleteBtnAlert(title: String, message: String, viewController: UIViewController) {
         let deleteAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "OK", style: .cancel) {_ in
             self.clearBasket()
-            // 액션 추가
         }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .destructive) {(action) in
-            // 액션 추가
-        }
+
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .destructive, handler: nil)
 
         deleteAlert.addAction(okAction)
         deleteAlert.addAction(cancelAction)
@@ -95,12 +108,8 @@ class ButtonView {
     func purchaseBtnAlert(title: String, message: String, viewController: UIViewController) {
         let purchaseAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "OK", style: .cancel) {(action) in
-            // 액션 추가
-        }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .destructive) {(action) in
-            // 액션 추가
-        }
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .destructive, handler: nil)
 
         purchaseAlert.addAction(okAction)
         purchaseAlert.addAction(cancelAction)
