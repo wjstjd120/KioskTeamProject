@@ -25,8 +25,8 @@ class TableCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implement")
     }
@@ -73,7 +73,6 @@ class TableCell: UITableViewCell {
             $0.height.equalTo(25)
             $0.top.equalTo(self).offset(9)
         }
-        
         
         //삭제버튼
         eliminationButton.setImage(UIImage(systemName: "x.circle.fill"), for: .normal)
