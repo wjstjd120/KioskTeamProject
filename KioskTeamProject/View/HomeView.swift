@@ -35,16 +35,19 @@ class HomeView: UIView {
     
     let itemsCount = {
         let x = UILabel()
-        x.text = ""
+        x.text = " 개"
         x.textAlignment = .left
+        x.font = UIFont.systemFont(ofSize: 20)
+        
         return x
     }()
     let totalPrice = {
         let x = UILabel()
-        x.text = ""
+        x.text = " 원"
         x.textAlignment = .right
         x.textColor = .white
-        x.frame.size
+        x.font = UIFont.systemFont(ofSize: 20)
+        
         return x
     }()
     
