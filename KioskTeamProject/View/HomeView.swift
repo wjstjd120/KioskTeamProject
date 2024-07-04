@@ -14,25 +14,20 @@ class HomeView: UIView {
     let segmentControl: UISegmentedControl = {
         let item = ["모든 카테고리", "액션", "로맨스", "공포"]
         let segmentControl = UISegmentedControl(items: item)
-        
         segmentControl.selectedSegmentIndex = 0
         segmentControl.backgroundColor = .white
         segmentControl.selectedSegmentTintColor = .gray
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        BookInit.shared.setFilteredBooks(0)
         
         return segmentControl
     }()
-    
-    var tempBooks: [Book] = BookInit.shared.list
-    var filteredBooks: [Book] = []
     
     private var buttonView: ButtonView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        filteredBooks = tempBooks
         
         createSegment()
         shoppingView()
@@ -52,8 +47,8 @@ class HomeView: UIView {
         segmentControl.snp.makeConstraints{
             $0.height.equalTo(30)
             $0.top.equalTo(self).offset(110)
-            $0.trailing.equalTo(self).offset(-9)
-            $0.leading.equalTo(self).offset(9)
+            $0.trailing.equalTo(self).offset(-5)
+            $0.leading.equalTo(self).offset(5)
         }
         segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
@@ -66,8 +61,8 @@ class HomeView: UIView {
         basketView.snp.makeConstraints{
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-100) // 하단으로부터 100만큼 띄어서 오토레이아웃 설정
             $0.height.equalTo(200) // 높이 400으로 설정
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.leading.equalToSuperview().offset(5)
+            $0.trailing.equalToSuperview().offset(-5)
         }
         setupTableDataSource()
     }
