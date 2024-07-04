@@ -27,17 +27,17 @@ class HomeController: UIViewController {
 
 extension HomeController: HomeViewDelegate {
     func getBook(at index: Int) -> Book {
-        return Book.list[index]
+        return BookInit.shared.list[index]
     }
     
     func getList(category: String) -> [Book] {
         print(category)
-        return Book.list
+        return BookInit.shared.list
     }
     
     func getListCount(category: String) -> Int {
         print(category)
-        return Book.list.count
+        return BookInit.shared.list.count
     }
 }
 
