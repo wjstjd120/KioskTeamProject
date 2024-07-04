@@ -23,7 +23,7 @@ class ButtonView {
         let deleteButton = UIButton(type: .system)
         deleteButton.setTitle("전체삭제", for: .normal)
         deleteButton.backgroundColor = .clear
-        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.setTitleColor(UIColor(hexCode: "973131"), for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         deleteButton.layer.cornerRadius = 20
         deleteButton.layer.borderWidth = 2
