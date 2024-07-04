@@ -6,7 +6,7 @@
 //
 struct Basket {
     let amount: Int
-    let code: String
+    let book: Book
 }
 
 class BasketInit {
@@ -19,7 +19,7 @@ class BasketInit {
     func addBasket(_ basket: Basket) {
         baskets.append(basket)
     }
-    
+        
     func getBaskets() -> [Basket] {
         return baskets
     }
