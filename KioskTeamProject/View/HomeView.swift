@@ -94,6 +94,8 @@ class HomeView: UIView {
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        collectionView.backgroundColor = .clear
+        
         // 셀 identifier
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
         
