@@ -138,4 +138,12 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         let height: Int = 160
         return CGSize(width: width, height: height)
     }
+    
+    // 책 클릭 이벤트 처리 메서드
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedBook = BookInit.shared.list[indexPath.item]
+        // 장바구니에 추가하는 로직 호출
+        BasketInit.shared.addBasket(Basket(amount: 1, book: selectedBook))
+    }
+
 }
