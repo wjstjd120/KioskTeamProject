@@ -11,16 +11,20 @@ struct Basket {
 
 class BasketInit {
     static let shared = BasketInit()
-    
+
     private init() {}
-    
+
     private var baskets: [Basket] = []
-    
+
     func addBasket(_ basket: Basket) {
         baskets.append(basket)
     }
-        
+
     func getBaskets() -> [Basket] {
         return baskets
+    }
+
+    func clearBasket() {
+        baskets.removeAll()
     }
 }
