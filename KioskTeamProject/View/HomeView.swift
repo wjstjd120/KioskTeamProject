@@ -30,7 +30,6 @@ class HomeView: UIView {
         super.init(frame: frame)
 
         self.backgroundColor = UIColor(hexCode: "FFDE95")
-        filteredBooks = tempBooks
 
         
         createSegment()
