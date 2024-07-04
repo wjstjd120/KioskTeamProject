@@ -140,4 +140,26 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         let height: Int = 160
         return CGSize(width: width, height: height)
     }
+    
+    @objc func segmentChanged(_ sender: UISegmentedControl)-> String{
+        switch sender.selectedSegmentIndex{
+        case segmentControlss[0]: return settingGenre(book: list, Genre: item[0])
+        
+        case segmentControlss[1]: return "Action"
+         
+        case segmentControlss[2]: return "Romance"
+           
+        case segmentControlss[3]: return "Horror"
+           
+        default: break
+           
+        }
+         
+      }
+    func settingGenre(book: Book ,Genre: String) -> Book{
+        let filteredBook = list.filter(<#T##Predicate<Self.Element>#>)
+        return filteredBook
+    }
 }
+
+
