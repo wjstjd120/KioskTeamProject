@@ -34,7 +34,7 @@ class HomeView: UIView {
 
         makeLogoImage()
         createSegment()
-        shoppingView()
+        BasketView()
         setupCollectionDataSource()
         buttonView = ButtonView(containerView: self)
         buttonView.tableDelegate = self
@@ -76,7 +76,7 @@ class HomeView: UIView {
     
     var basketView = UITableView() // 테이블 뷰의 UITableView 변수 생성
     
-    private func shoppingView() { // 테이블뷰의 레이아웃
+    private func BasketView() { // 테이블뷰의 레이아웃
         self.addSubview(basketView)
         
         basketView.snp.makeConstraints{
@@ -89,7 +89,7 @@ class HomeView: UIView {
     }
     
     private func setupTableView() {
-        shoppingView()
+        BasketView()
         self.addSubview(basketView)
     }
     
