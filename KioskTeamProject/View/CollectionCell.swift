@@ -44,6 +44,16 @@ class CollectionCell: UICollectionViewCell {
     
     func configure() {
         guard let book = self.book else { return }
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .white
+        self.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor // 색
+        layer.shadowOpacity = 0.25  // 불투명도
+        layer.shadowOffset = CGSize(width: 0, height: 2) // 오프셋
+        layer.shadowRadius = 4.0 // 반경
+        layer.masksToBounds = false // 셀의 경계에서 안잘리게 함
+        
         titleImageView.image = book.image
         titleLabel.text = book.title
         priceLabel.text = "\(book.price) 원"
@@ -65,7 +75,7 @@ class CollectionCell: UICollectionViewCell {
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(0)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(40)
         }

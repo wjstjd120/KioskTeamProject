@@ -37,7 +37,7 @@ class HomeView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        //        self.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9058823529, blue: 0.6980392157, alpha: 1)
         self.backgroundColor = UIColor(hexCode: "FFDE95")
 
         makeLogoImage()
@@ -48,11 +48,11 @@ class HomeView: UIView {
         buttonView.tableDelegate = self
         setupBtns()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+  
     private func makeLogoImage() {
         logoImageView = UIImageView()
         logoImageView.image = UIImage(named: "logoImage")
@@ -120,6 +120,7 @@ class HomeView: UIView {
     private func setupCollectionDataSource() {
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = .clear
 
         // 셀 identifier
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
@@ -141,12 +142,13 @@ extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return BasketInit.shared.getBaskets().count
     }
+    
     //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableCell.customCelld, for: indexPath) as! TableCell
 
         cell.tableDelegate = self
-
+        
         if !BasketInit.shared.getBaskets().isEmpty {
             cell.plusButton.tag = indexPath.item
             cell.minusButton.tag = indexPath.item
@@ -176,11 +178,9 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         return CGSize(width: width, height: height)
     }
 
-
     @objc func segmentChanged(_ sender: UISegmentedControl){
         BookInit.shared.setFilteredBooks(sender.selectedSegmentIndex)
         collectionView.reloadData()
-
     }
 
     // 책 클릭 이벤트 처리 메서드
