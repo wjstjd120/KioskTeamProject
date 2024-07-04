@@ -8,7 +8,9 @@
 import UIKit
 import SnapKit
 
-class Button {
+class ButtonView {
+    weak var tableDelegate: TableViewReloadDelegate?
+    
     var basketData = BasketInit.shared
     let containerView: UIView
 
@@ -107,7 +109,8 @@ class Button {
     }
 
     func clearBasket() {
-        basketData.clearBasket()
+        basketData.clearBaskets()
+        tableDelegate?.reloadTableView()
         print("장바구니 전체 삭제")
     }
 }
