@@ -108,17 +108,29 @@ class ButtonView {
     func purchaseBtnAlert(title: String, message: String, viewController: UIViewController) {
         let purchaseAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .cancel) {_ in
+            let doubleAlert = UIAlertController(title: "구매완료", message: "구매가 완료 되었습니다.", preferredStyle: .alert)
+            
+            let confirmAction = UIAlertAction(title: "확인", style: .destructive) {_ in
+                self.clearBasket()
+            }
+            
+            doubleAlert.addAction(confirmAction)
+            
+            viewController.present(doubleAlert, animated: true, completion: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "CANCEL", style: .destructive, handler: nil)
-
+        
         purchaseAlert.addAction(okAction)
         purchaseAlert.addAction(cancelAction)
 
         viewController.present(purchaseAlert, animated: true, completion: nil)
     }
-
+    
     func clearBasket() {
         basketData.clearBaskets()
+        tableDelegate?.reloadBasketContainer()
         tableDelegate?.reloadTableView()
         print("장바구니 전체 삭제")
     }

@@ -45,7 +45,7 @@ class CollectionCell: UICollectionViewCell {
     func configure() {
         guard let book = self.book else { return }
         self.layer.cornerRadius = 10
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(hexCode: "EEEDEB")
         self.layer.masksToBounds = true
         
         layer.shadowColor = UIColor.black.cgColor // 색

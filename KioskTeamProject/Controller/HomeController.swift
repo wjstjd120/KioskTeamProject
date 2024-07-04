@@ -30,19 +30,17 @@ extension HomeController: HomeViewDelegate {
         return BookInit.shared.list[index]
     }
     
-    func getList(category: String) -> [Book] {
-        print(category)
+    func getList() -> [Book] {
         return BookInit.shared.list
     }
     
-    func getListCount(category: String) -> Int {
-        print(category)
+    func getListCount() -> Int {
         return BookInit.shared.list.count
     }
 }
 
 protocol HomeViewDelegate: AnyObject {
     func getBook(at index: Int) -> Book
-    func getListCount(category: String) -> Int
-    func getList(category: String) -> [Book]
+    func getListCount() -> Int
+    func getList() -> [Book]
 }

@@ -39,4 +39,12 @@ class BasketInit {
     func removeBaskes(_ index: Int) {
         baskets.remove(at: index)
     }
+    
+    func getBasketsCount() -> Int {
+        return baskets.map { $0.amount }.reduce(0, +)
+    }
+    
+    func getBasketsTotalPrice() -> Int {
+        return baskets.map { $0.book.price * $0.amount }.reduce(0, +)
+    }
 }

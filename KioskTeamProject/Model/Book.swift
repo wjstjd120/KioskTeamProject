@@ -21,8 +21,8 @@ class BookInit {
         Book(title: "메이드인 인 어비스", price: 300, image: .book1, category: "Horror"),
         Book(title: "하이큐", price: 250, image: .book2, category: "Action"),
         Book(title: "크레용 신짱", price: 400, image: .book3, category: "Action"),
-        Book(title: "prison school", price: 350, image: .book4, category: "Horror"),
-        Book(title: "prison school", price: 290, image: .book5, category: "Horror"),
+        Book(title: "감옥학원", price: 350, image: .book4, category: "Horror"),
+        Book(title: "유희왕", price: 290, image: .book5, category: "Action"),
         Book(title: "귀멸의 칼날", price: 100, image: .book6, category: "Action"),
         Book(title: "치즈인더트랩", price: 320, image: .book7, category: "Romance"),
         Book(title: "나루토", price: 200, image: .book8, category: "Action"),
@@ -38,9 +38,8 @@ class BookInit {
         Book(title: "원피스", price: 270, image: .book18, category: "Action"),
         Book(title: "약속의 네버랜드", price: 100, image: .book19, category: "Action"),
         Book(title: "진격의 거인", price: 240, image: .book20, category: "Action"),
-        Book(title: "나의 히어로아케데미아", price: 140, image: .book21, category: "Action"),
+        Book(title: "나의 히어로아카데미아", price: 140, image: .book21, category: "Action"),
         Book(title: "기생수", price: 200, image: .book22, category: "Horror"),
-        Book(title: "유희왕", price: 300, image: .book23, category: "Action")
     ]
     
     var filteredBooks: [Book] = []

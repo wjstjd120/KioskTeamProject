@@ -92,9 +92,11 @@ class TableCell: UITableViewCell {
         //갯수 레이블
         numberLabel.text = "\(numbers)"
         numberLabel.textColor = .black
+        numberLabel.textAlignment = .center
         numberLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.left.equalTo(minusButton.snp.right).offset(5)
+            $0.right.equalTo(plusButton.snp.left).offset(-5)
         }
         
         //금액 레이블
@@ -114,12 +116,14 @@ class TableCell: UITableViewCell {
         nameLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().offset(10)
+            $0.right.equalTo(minusButton.snp.left).offset(-5)
         }
     }
     //플러스 버튼 숫자 증가
     @objc private func plusButtonTap(_ sender: UIButton) {
         numberLabel.text = "\(numbers)"
         BasketInit.shared.plusAmount(sender.tag)
+        tableDelegate?.reloadBasketContainer()
         tableDelegate?.reloadTableView()
     }
     //마이너스 버튼 숫자 감소
@@ -129,12 +133,14 @@ class TableCell: UITableViewCell {
         }else {
             numberLabel.text = "\(numbers)"
             BasketInit.shared.minusAmount(sender.tag)
+            tableDelegate?.reloadBasketContainer()
             tableDelegate?.reloadTableView()
         }
     }
     //삭제버튼
     @objc private func eliminationButtonTap(_ sender: UIButton) {
         BasketInit.shared.removeBaskes(sender.tag)
+        tableDelegate?.reloadBasketContainer()
         tableDelegate?.reloadTableView()
     }
 }
