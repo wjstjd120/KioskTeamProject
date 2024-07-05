@@ -21,7 +21,7 @@ class CollectionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        
+        label.font = UIFont(name: "UhBeeZZIBA-Regular", size: 15)
         return label
     }()
     
@@ -30,7 +30,7 @@ class CollectionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-
+        label.font = UIFont(name: "UhBeeZZIBA-Regular", size: 12)
         return label
     }()
     

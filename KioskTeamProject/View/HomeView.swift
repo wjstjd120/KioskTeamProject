@@ -18,11 +18,16 @@ class HomeView: UIView {
 //        segmentControl.backgroundColor = UIColor(hexCode: "A4BB94", alpha: 0.2)
         segmentControl.selectedSegmentTintColor = UIColor(hexCode: "D98C59", alpha: 1.0)
 
-        //selectedFont bold체, normalFont 시스템체
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        let selectedFontAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)]
+
+        let normalFontAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "HancomMalangMalang-Regular", size: UIFont.systemFontSize) ?? UIFont.systemFont(ofSize: UIFont.systemFontSize)
+        ]
+
+        let selectedFontAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont(name: "HancomMalangMalang-Bold", size: UIFont.systemFontSize) ?? UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
+        ]
 
         segmentControl.setTitleTextAttributes(normalFontAttributes, for: .normal)
         segmentControl.setTitleTextAttributes(selectedFontAttributes, for: .selected)
@@ -34,7 +39,7 @@ class HomeView: UIView {
     
     let basketContainer: UIView = {
         var view = UIView()
-        view.backgroundColor = UIColor(hexCode: "D98C59")
+        view.backgroundColor = UIColor(hexCode: "F09C64")
         view.layer.cornerRadius = 10
         return view
     }()
@@ -45,8 +50,8 @@ class HomeView: UIView {
     let itemsCount = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 15)
-        
+        label.font = UIFont(name: "HancomMalangMalang-Bold", size: 16)
+
         return label
     }()
     
@@ -54,8 +59,8 @@ class HomeView: UIView {
         let label = UILabel()
         label.textAlignment = .right
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 15)
-        
+        label.font = UIFont(name: "HancomMalangMalang-Bold", size: 18)
+
         return label
     }()
 

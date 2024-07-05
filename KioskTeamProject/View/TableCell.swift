@@ -50,7 +50,7 @@ class TableCell: UITableViewCell {
         plusButton.setTitle("+", for: .normal)
         plusButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         plusButton.setTitleColor(.white, for: .normal)
-        plusButton.backgroundColor = .red
+        plusButton.backgroundColor = UIColor(hexCode: "EC6464")
         plusButton.layer.cornerRadius = 5
         plusButton.addTarget(self, action: #selector(plusButtonTap), for: .touchDown)
         plusButton.snp.makeConstraints{
@@ -64,7 +64,7 @@ class TableCell: UITableViewCell {
         minusButton.setTitle("-", for: .normal)
         minusButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         minusButton.setTitleColor(.white, for: .normal)
-        minusButton.backgroundColor = .gray
+        minusButton.backgroundColor = UIColor(hexCode: "ABA8A8")
         minusButton.layer.cornerRadius = 5
         minusButton.addTarget(self, action: #selector(minusButtonTap), for: .touchDown)
         minusButton.snp.makeConstraints{
@@ -102,7 +102,7 @@ class TableCell: UITableViewCell {
         //금액 레이블
         priceLabel.text = "\(numbers * Int(basket!.book.price)) 원"
         priceLabel.textColor = .black
-        priceLabel.font = .systemFont(ofSize: 15)
+        priceLabel.font = UIFont(name: "HancomMalangMalang-Bold", size: 15)
         priceLabel.snp.makeConstraints{
 
             $0.right.equalTo(eliminationButton.snp.left).offset(-5)
@@ -113,6 +113,7 @@ class TableCell: UITableViewCell {
         //이름 받아오는 레이블
         nameLabel.text = "\(basket!.book.title)"
         nameLabel.textColor = .black
+        nameLabel.font = UIFont(name: "HancomMalangMalang-Bold", size: 15)
         nameLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().offset(10)

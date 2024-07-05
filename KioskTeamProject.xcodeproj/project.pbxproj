@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		14BBCB0C2C3530BD005F24D4 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BBCB0B2C3530BD005F24D4 /* TableCell.swift */; };
+		279C814C2C3778150035C84E /* GowunBatang-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279C814A2C3778140035C84E /* GowunBatang-Bold.ttf */; };
+		279C814D2C3778150035C84E /* GowunBatang-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279C814B2C3778150035C84E /* GowunBatang-Regular.ttf */; };
+		279C81582C377A4B0035C84E /* HancomMalangMalang-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279C81562C377A4B0035C84E /* HancomMalangMalang-Bold.ttf */; };
+		279C81592C377A4B0035C84E /* HancomMalangMalang-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279C81572C377A4B0035C84E /* HancomMalangMalang-Regular.ttf */; };
+		279C815D2C377E3E0035C84E /* UhBeeZZIBA-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279C815C2C377E3E0035C84E /* UhBeeZZIBA-Regular.ttf */; };
 		27B34E342C34F8070019C4A1 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B34E332C34F8070019C4A1 /* ButtonView.swift */; };
 		74A8AD002C33966800CA2C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8ACFF2C33966800CA2C08 /* AppDelegate.swift */; };
 		74A8AD022C33966800CA2C08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8AD012C33966800CA2C08 /* SceneDelegate.swift */; };
@@ -23,6 +28,11 @@
 
 /* Begin PBXFileReference section */
 		14BBCB0B2C3530BD005F24D4 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		279C814A2C3778140035C84E /* GowunBatang-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GowunBatang-Bold.ttf"; sourceTree = "<group>"; };
+		279C814B2C3778150035C84E /* GowunBatang-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GowunBatang-Regular.ttf"; sourceTree = "<group>"; };
+		279C81562C377A4B0035C84E /* HancomMalangMalang-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HancomMalangMalang-Bold.ttf"; sourceTree = "<group>"; };
+		279C81572C377A4B0035C84E /* HancomMalangMalang-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HancomMalangMalang-Regular.ttf"; sourceTree = "<group>"; };
+		279C815C2C377E3E0035C84E /* UhBeeZZIBA-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UhBeeZZIBA-Regular.ttf"; sourceTree = "<group>"; };
 		27B34E332C34F8070019C4A1 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		74A8ACFC2C33966800CA2C08 /* KioskTeamProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KioskTeamProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A8ACFF2C33966800CA2C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +59,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		279C81482C3777CB0035C84E /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				279C81492C3777DE0035C84E /* Font */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		279C81492C3777DE0035C84E /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				279C814A2C3778140035C84E /* GowunBatang-Bold.ttf */,
+				279C814B2C3778150035C84E /* GowunBatang-Regular.ttf */,
+				279C81562C377A4B0035C84E /* HancomMalangMalang-Bold.ttf */,
+				279C81572C377A4B0035C84E /* HancomMalangMalang-Regular.ttf */,
+				279C815C2C377E3E0035C84E /* UhBeeZZIBA-Regular.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		74A8ACF32C33966800CA2C08 = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +101,7 @@
 				74A8AD182C339E5E00CA2C08 /* Model */,
 				74A8AD172C339E4A00CA2C08 /* View */,
 				74A8AD162C339C8400CA2C08 /* Controller */,
+				279C81482C3777CB0035C84E /* resources */,
 				74A8ACFF2C33966800CA2C08 /* AppDelegate.swift */,
 				74A8AD012C33966800CA2C08 /* SceneDelegate.swift */,
 				74A8AD082C33966900CA2C08 /* Assets.xcassets */,
@@ -172,6 +203,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279C814C2C3778150035C84E /* GowunBatang-Bold.ttf in Resources */,
+				279C814D2C3778150035C84E /* GowunBatang-Regular.ttf in Resources */,
+				279C81582C377A4B0035C84E /* HancomMalangMalang-Bold.ttf in Resources */,
+				279C81592C377A4B0035C84E /* HancomMalangMalang-Regular.ttf in Resources */,
+				279C815D2C377E3E0035C84E /* UhBeeZZIBA-Regular.ttf in Resources */,
 				74A8AD092C33966900CA2C08 /* Assets.xcassets in Resources */,
 				74A8AD0C2C33966900CA2C08 /* Base in Resources */,
 			);
