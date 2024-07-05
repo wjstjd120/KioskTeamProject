@@ -2,7 +2,7 @@
 //  MainView.swift
 //  KioskTeamProject
 //
-//  Created by 전성진 on 7/2/24.
+//  Created by 전성진 on 7/2/24..
 //  
 
 import UIKit
