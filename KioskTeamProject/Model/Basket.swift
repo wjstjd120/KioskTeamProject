@@ -17,7 +17,11 @@ class BasketInit {
     private var baskets: [Basket] = []
     
     func addBasket(_ basket: Basket) {
-        baskets.append(basket)
+        if let index = baskets.firstIndex(where: { $0.book.title == basket.book.title }) {
+            baskets[index].amount += basket.amount
+        } else {
+            baskets.append(basket)
+        }
     }
     
     func plusAmount(_ index: Int) {
