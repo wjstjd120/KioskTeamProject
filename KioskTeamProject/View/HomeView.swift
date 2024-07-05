@@ -9,9 +9,15 @@ import UIKit
 import SnapKit
 
 class HomeView: UIView {
+    
     weak var delegate: HomeViewDelegate?
-
-    let segmentControl: UISegmentedControl = {
+    private var logoImage = {
+        let x = UIImageView()
+        x.image = UIImage(named: "logoImage")
+        x.contentMode = .scaleAspectFit
+        return x
+    }() //로고이미지 변수생성
+    let segmentControl = {
         let item = ["모든 카테고리", "액션", "로맨스", "공포"]
         let segmentControl = UISegmentedControl(items: item)
         segmentControl.selectedSegmentIndex = 0
@@ -35,26 +41,24 @@ class HomeView: UIView {
         BookInit.shared.setFilteredBooks(0)
 
         return segmentControl
-    }()
-    
-    let basketContainer: UIView = {
+    }() //세그먼트 변수생성
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }() // 컨텐츠 담는 컬렉션 뷰
+    let basketContainer = {
         var view = UIView()
         view.backgroundColor = UIColor(hexCode: "F09C64")
         view.layer.cornerRadius = 10
         return view
-    }()
-
-    private var logoImageView: UIImageView!
-    private var buttonView: ButtonView!
-    
+    }() // 테이블뷰 감싸는 컨테이너뷰생성
     let itemsCount = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont(name: "HancomMalangMalang-Bold", size: 16)
 
         return label
-    }()
-    
+    }() // 장바구니 총 갯수
     let totalPrice = {
         let label = UILabel()
         label.textAlignment = .right
@@ -62,7 +66,14 @@ class HomeView: UIView {
         label.font = UIFont(name: "HancomMalangMalang-Bold", size: 18)
 
         return label
-    }()
+    }() // 장바구니 상품 총금액
+    var basketView = {
+        var x = UITableView()
+        x.layer.cornerRadius = 10
+        return x
+    }()  // 테이블 뷰의 UITableView 변수 생성
+    private var buttonView: ButtonView!
+// 변수 생성
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,8 +81,8 @@ class HomeView: UIView {
         self.backgroundColor = UIColor(hexCode: "FFDE95")
         setupBasketContainer()
         reloadBasketContainer()
-        makeLogoImage()
-        createSegment()
+        setupLogo()
+        setupSegment()
         setupBasketView()
         setupCollectionDataSource()
         buttonView = ButtonView(containerView: self)
@@ -82,22 +93,46 @@ class HomeView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    private func makeLogoImage() {
-        logoImageView = UIImageView()
-        logoImageView.image = UIImage(named: "logoImage")
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(logoImageView)
-        
-        logoImageView.snp.makeConstraints {
+// 레이아웃 지정 및 값 설정
+    private func setupLogo() {
+        self.addSubview(logoImage)
+        logoImage.snp.makeConstraints {
             $0.width.equalTo(300)
             $0.top.equalTo(self).offset(60)
             $0.centerX.equalTo(self)
         }
     }
-    
+    private func setupSegment() {
+        
+        
+        self.addSubview(segmentControl)
+        
+        segmentControl.snp.makeConstraints{
+            $0.height.equalTo(38)
+            $0.top.equalTo(logoImage.snp.bottom).offset(15)
+            $0.trailing.equalTo(self).offset(-5)
+            $0.leading.equalTo(self).offset(5)
+        }
+        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
+    }
+    private func setupCollectionDataSource() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+
+        // 셀 identifier
+        collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
+
+        self.addSubview(collectionView)
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentControl.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(5)
+            $0.bottom.equalTo(basketContainer.snp.top).offset(-10)
+        }
+    } // 컬렉션 뷰 세팅 메서드
+// 테이블뷰
     private func setupBasketContainer() {
         self.addSubview(basketContainer)
         
@@ -128,30 +163,6 @@ class HomeView: UIView {
             $0.edges.equalToSuperview()
         }
     }
-
-
-    private func createSegment() {
-        guard let logoImageView = self.logoImageView else { return }
-        
-        self.addSubview(segmentControl)
-        
-        segmentControl.snp.makeConstraints{
-            $0.height.equalTo(38)
-            $0.top.equalTo(logoImageView.snp.bottom).offset(15)
-            $0.trailing.equalTo(self).offset(-5)
-            $0.leading.equalTo(self).offset(5)
-        }
-        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
-    }
-
-    
-    var basketView = {
-        var s = UITableView()
-        s.layer.cornerRadius = 10
-        return s
-    }()  // 테이블 뷰의 UITableView 변수 생성
-    
-
     private func setupBasketView() { // 테이블뷰의 레이아웃
         self.addSubview(basketView)
 
@@ -163,45 +174,25 @@ class HomeView: UIView {
         }
         setupTableDataSource()
     }
-
     private func setupTableView() {
         setupBasketView()
         self.addSubview(basketView)
     }
-
     private func setupTableDataSource() {
         basketView.register(TableCell.self, forCellReuseIdentifier: TableCell.customCelld)
         basketView.dataSource = self
         basketView.delegate = self
     }
 
+//하단버튼
     internal func setupBtns() {
         buttonView.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
     }
 
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
 
-    // 컬렉션 뷰 세팅 메서드
-    private func setupCollectionDataSource() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
 
-        // 셀 identifier
-        collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
+    
 
-        self.addSubview(collectionView)
-
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(segmentControl.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(5)
-            $0.bottom.equalTo(basketContainer.snp.top).offset(-10)
-        }
-    }
 }
 
 extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDataSource 셀에서 어떻게 보여줄지 나타내는 프로토콜
