@@ -10,8 +10,14 @@ import SnapKit
 
 class HomeView: UIView {
     weak var delegate: HomeViewDelegate?
+    private var logoImage = {
+        let x = UIImageView()
+        x.image = UIImage(named: "logoImage")
+        x.contentMode = .scaleAspectFit
+        return x
+    }()
 
-    let segmentControl: UISegmentedControl = {
+    let segmentControl = {
         let item = ["모든 카테고리", "액션", "로맨스", "공포"]
         let segmentControl = UISegmentedControl(items: item)
         segmentControl.selectedSegmentIndex = 0
@@ -37,14 +43,14 @@ class HomeView: UIView {
         return segmentControl
     }()
     
-    let basketContainer: UIView = {
+    let basketContainer = {
         var view = UIView()
         view.backgroundColor = UIColor(hexCode: "F09C64")
         view.layer.cornerRadius = 10
         return view
     }()
 
-    private var logoImageView: UIImageView!
+    
     private var buttonView: ButtonView!
     
     let itemsCount = {
@@ -70,8 +76,8 @@ class HomeView: UIView {
         self.backgroundColor = UIColor(hexCode: "FFDE95")
         setupBasketContainer()
         reloadBasketContainer()
-        makeLogoImage()
-        createSegment()
+        setupLogo()
+        setupSegment()
         setupBasketView()
         setupCollectionDataSource()
         buttonView = ButtonView(containerView: self)
@@ -83,19 +89,26 @@ class HomeView: UIView {
         super.init(coder: coder)
     }
     
-    private func makeLogoImage() {
-        logoImageView = UIImageView()
-        logoImageView.image = UIImage(named: "logoImage")
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(logoImageView)
-        
-        logoImageView.snp.makeConstraints {
+    private func setupLogo() {
+        self.addSubview(logoImage)
+        logoImage.snp.makeConstraints {
             $0.width.equalTo(300)
             $0.top.equalTo(self).offset(60)
             $0.centerX.equalTo(self)
         }
+    }
+    private func setupSegment() {
+        
+        
+        self.addSubview(segmentControl)
+        
+        segmentControl.snp.makeConstraints{
+            $0.height.equalTo(38)
+            $0.top.equalTo(logoImage.snp.bottom).offset(15)
+            $0.trailing.equalTo(self).offset(-5)
+            $0.leading.equalTo(self).offset(5)
+        }
+        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
     
     private func setupBasketContainer() {
@@ -130,19 +143,7 @@ class HomeView: UIView {
     }
 
 
-    private func createSegment() {
-        guard let logoImageView = self.logoImageView else { return }
-        
-        self.addSubview(segmentControl)
-        
-        segmentControl.snp.makeConstraints{
-            $0.height.equalTo(38)
-            $0.top.equalTo(logoImageView.snp.bottom).offset(15)
-            $0.trailing.equalTo(self).offset(-5)
-            $0.leading.equalTo(self).offset(5)
-        }
-        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
-    }
+    
 
     
     var basketView = {
