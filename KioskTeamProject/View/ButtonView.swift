@@ -22,28 +22,26 @@ class ButtonView {
         // 전체 삭제 버튼
         let deleteButton = UIButton(type: .system)
         deleteButton.setTitle("전체삭제", for: .normal)
-        deleteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        deleteButton.titleLabel?.font = UIFont(name: "HancomMalangMalang-Bold", size: 17)
         deleteButton.backgroundColor = .clear
-        deleteButton.setTitleColor(UIColor(hexCode: "973131"), for: .normal)
+        deleteButton.setTitleColor(UIColor(hexCode: "8EB374"), for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         deleteButton.layer.cornerRadius = 20
         deleteButton.layer.borderWidth = 2
-        deleteButton.layer.borderColor = UIColor(hexCode: "973131").cgColor
-        
-        // 그림자 속성적용
-        btnShadow(to: deleteButton)
+        deleteButton.layer.borderColor = UIColor(hexCode: "8EB374").cgColor
+
 
         // 구매 버튼
         let purchaseButton = UIButton(type: .system)
         purchaseButton.setTitle("구매하기", for: .normal)
-        purchaseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        purchaseButton.backgroundColor = UIColor(hexCode: "973131")
+        purchaseButton.titleLabel?.font = UIFont(name: "HancomMalangMalang-Bold", size: 17)
+        purchaseButton.backgroundColor = UIColor(hexCode: "8EB374")
         purchaseButton.setTitleColor(UIColor(hexCode: "FFDE95"), for: .normal)
         purchaseButton.addTarget(self, action: #selector(purchaseBtnTapped), for: .touchUpInside)
         purchaseButton.layer.cornerRadius = 20
         
         // 그림자 속성적용
-        btnShadow(to: purchaseButton)
+//        btnShadow(to: purchaseButton)
 
         containerView.addSubview(deleteButton)
         containerView.addSubview(purchaseButton)
@@ -63,14 +61,6 @@ class ButtonView {
             $0.top.equalTo(containerView.snp.bottom).inset(70)
             $0.trailing.equalToSuperview().offset(-60)
         }
-    }
-    //버튼 그림자 설정
-    func btnShadow(to button: UIButton) {
-        button.layer.shadowColor = UIColor.gray.cgColor
-        button.layer.masksToBounds = false
-        button.layer.shadowRadius = 4
-        button.layer.shadowOffset = CGSize(width: 1, height: 2)
-        button.layer.shadowOpacity = 0.5
     }
 
     // 전체 삭제 버튼 액션
