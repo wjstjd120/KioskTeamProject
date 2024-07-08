@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 
 class ButtonView {
-    weak var tableDelegate: TableViewReloadDelegate?
+    weak var delegate: HomeViewDelegate?
+    weak var containerView: UIView!
 
     var basketData = BasketInit.shared
-    let containerView: UIView
 
-    init(containerView: UIView) {
-        self.containerView = containerView
-    }
+//    init(containerView: UIView) {
+//        self.containerView = containerView
+//    }
 
     func makeButtons() {
         // 전체 삭제 버튼
@@ -120,8 +120,8 @@ class ButtonView {
     
     func clearBasket() {
         basketData.clearBaskets()
-        tableDelegate?.reloadBasketContainer()
-        tableDelegate?.reloadTableView()
+        delegate?.reloadBasketContainer()
+        delegate?.reloadTableView()
         print("장바구니 전체 삭제")
     }
 }

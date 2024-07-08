@@ -11,6 +11,7 @@ import SnapKit
 class HomeView: UIView {
     
     weak var delegate: HomeViewDelegate?
+    
     private var logoImage = {
         let x = UIImageView()
         x.image = UIImage(named: "logoImage")
@@ -37,8 +38,6 @@ class HomeView: UIView {
 
         segmentControl.setTitleTextAttributes(normalFontAttributes, for: .normal)
         segmentControl.setTitleTextAttributes(selectedFontAttributes, for: .selected)
-
-        BookInit.shared.setFilteredBooks(0)
 
         return segmentControl
     }() //세그먼트 변수생성
@@ -72,7 +71,7 @@ class HomeView: UIView {
         x.layer.cornerRadius = 10
         return x
     }()  // 테이블 뷰의 UITableView 변수 생성
-    private var buttonView: ButtonView!
+    
 // 변수 생성
 
     override init(frame: CGRect) {
@@ -80,14 +79,12 @@ class HomeView: UIView {
         //        self.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9058823529, blue: 0.6980392157, alpha: 1)
         self.backgroundColor = UIColor(hexCode: "FFDE95")
         setupBasketContainer()
-        reloadBasketContainer()
+//        reloadBasketContainer()
         setupLogo()
         setupSegment()
         setupBasketView()
         setupCollectionDataSource()
-        buttonView = ButtonView(containerView: self)
-        buttonView.tableDelegate = self
-        setupBtns()
+//        setupBtns()
     }
     
     required init?(coder: NSCoder) {
@@ -104,7 +101,6 @@ class HomeView: UIView {
     }
     private func setupSegment() {
         
-        
         self.addSubview(segmentControl)
         
         segmentControl.snp.makeConstraints{
@@ -116,12 +112,7 @@ class HomeView: UIView {
         segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
     private func setupCollectionDataSource() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.backgroundColor = .clear
-
-        // 셀 identifier
-        collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
 
         self.addSubview(collectionView)
 
@@ -132,7 +123,7 @@ class HomeView: UIView {
             $0.bottom.equalTo(basketContainer.snp.top).offset(-10)
         }
     } // 컬렉션 뷰 세팅 메서드
-// 테이블뷰
+    // 테이블뷰
     private func setupBasketContainer() {
         self.addSubview(basketContainer)
         
@@ -172,100 +163,16 @@ class HomeView: UIView {
             $0.leading.equalTo(basketContainer).offset(8)
             $0.trailing.equalTo(basketContainer).offset(-8)
         }
-        setupTableDataSource()
     }
     private func setupTableView() {
         setupBasketView()
         self.addSubview(basketView)
     }
-    private func setupTableDataSource() {
-        basketView.register(TableCell.self, forCellReuseIdentifier: TableCell.customCelld)
-        basketView.dataSource = self
-        basketView.delegate = self
-    }
-
-//하단버튼
-    internal func setupBtns() {
-        buttonView.makeButtons()  // Button의 버튼들을 생성하고 설정하는 메서드 호출
-    }
-
-
-
-    
-
-}
-
-extension HomeView: UITableViewDataSource, UITableViewDelegate { //UITableViewDataSource 셀에서 어떻게 보여줄지 나타내는 프로토콜
-    //UITableViewDelegate는 셀이 눌렸을때 이벤트를 실행하므로 제거
-    //func tableView(tableView:, numberOfRowsInSection ) -> 셀을 보여줄 갯수를 정하는 곳
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return BasketInit.shared.getBaskets().count
-    }
-    
-    //func tableView(tableView:,cellForRowAt) 셀을 어떻게 보여줄지 정하는 곳
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableCell.customCelld, for: indexPath) as! TableCell
-
-        cell.tableDelegate = self
-        
-        if !BasketInit.shared.getBaskets().isEmpty {
-            cell.plusButton.tag = indexPath.item
-            cell.minusButton.tag = indexPath.item
-            cell.eliminationButton.tag = indexPath.item
-            cell.basket = BasketInit.shared.getBaskets()[indexPath.item]
-            cell.custonlayout()
-        }
-        return cell
-    }
-}
-
-extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return BookInit.shared.getFilteredBooksCount()
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentsCell", for: indexPath) as! CollectionCell
-        cell.book = BookInit.shared.filteredBooks[indexPath.item]
-        cell.configure()
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: Int = Int(collectionView.bounds.width / 3) - 10
-        let height: Int = 160
-        return CGSize(width: width, height: height)
-    }
-
-    // 책 클릭 이벤트 처리 메서드
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedBook = BookInit.shared.filteredBooks[indexPath.item]
-        // 장바구니에 추가하는 로직 호출
-        BasketInit.shared.addBasket(Basket(amount: 1, book: selectedBook))
-        reloadBasketContainer()
-        basketView.reloadData()
-    }
     
     @objc func segmentChanged(_ sender: UISegmentedControl){
         BookInit.shared.setFilteredBooks(sender.selectedSegmentIndex)
-        collectionView.reloadData()
+        delegate?.segmentChanged(sender)
     }
-}
-
-extension HomeView: TableViewReloadDelegate {
-    func reloadTableView() {
-        basketView.reloadData()
-    }
-    
-    func reloadBasketContainer() {
-        itemsCount.text = "총 \(BasketInit.shared.getBasketsCount())개"
-        totalPrice.text = "합계: \(BasketInit.shared.getBasketsTotalPrice())원"
-    }
-}
-
-protocol TableViewReloadDelegate: AnyObject {
-    func reloadTableView()
-    func reloadBasketContainer()
 }
 
 extension UIColor {

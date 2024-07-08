@@ -85,5 +85,3 @@ class BookInit {
     
     private init() {} // Singleton 패턴을 위한 private initializer
 }
-
-

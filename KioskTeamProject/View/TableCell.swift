@@ -11,7 +11,7 @@ import SnapKit
 class TableCell: UITableViewCell {
     var basket: Basket?
     
-    weak var tableDelegate: TableViewReloadDelegate?
+    weak var delegate: HomeViewDelegate?
     
     static let customCelld =  "custommcelld"
     
@@ -124,8 +124,8 @@ class TableCell: UITableViewCell {
     @objc private func plusButtonTap(_ sender: UIButton) {
         numberLabel.text = "\(numbers)"
         BasketInit.shared.plusAmount(sender.tag)
-        tableDelegate?.reloadBasketContainer()
-        tableDelegate?.reloadTableView()
+        delegate?.reloadBasketContainer()
+        delegate?.reloadTableView()
     }
     //마이너스 버튼 숫자 감소
     @objc private func minusButtonTap(_ sender: UIButton) {
@@ -134,14 +134,14 @@ class TableCell: UITableViewCell {
         }else {
             numberLabel.text = "\(numbers)"
             BasketInit.shared.minusAmount(sender.tag)
-            tableDelegate?.reloadBasketContainer()
-            tableDelegate?.reloadTableView()
+            delegate?.reloadBasketContainer()
+            delegate?.reloadTableView()
         }
     }
     //삭제버튼
     @objc private func eliminationButtonTap(_ sender: UIButton) {
         BasketInit.shared.removeBaskes(sender.tag)
-        tableDelegate?.reloadBasketContainer()
-        tableDelegate?.reloadTableView()
+        delegate?.reloadBasketContainer()
+        delegate?.reloadTableView()
     }
 }
