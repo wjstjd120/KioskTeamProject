@@ -33,26 +33,6 @@ class HomeController: UIViewController {
     }
 }
 
-//extension HomeController: HomeViewDelegate {
-//    func getBook(at index: Int) -> Book {
-//        return BookInit.shared.list[index]
-//    }
-//    
-//    func getList() -> [Book] {
-//        return BookInit.shared.list
-//    }
-//    
-//    func getListCount() -> Int {
-//        return BookInit.shared.list.count
-//    }
-//}
-//
-//protocol HomeViewDelegate: AnyObject {
-//    func getBook(at index: Int) -> Book
-//    func getListCount() -> Int
-//    func getList() -> [Book]
-//}
-
 extension HomeController: HomeViewDelegate {
     func reloadTableView() {
         homeView.basketView.reloadData()
@@ -137,5 +117,26 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         homeView.collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "contentsCell")
         homeView.collectionView.dataSource = self
         homeView.collectionView.delegate = self
+    }
+}
+
+extension UIColor {
+
+    convenience init(hexCode: String, alpha: CGFloat = 1.0) {
+        var hexFormatted: String = hexCode.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+
+        if hexFormatted.hasPrefix("#") {
+            hexFormatted = String(hexFormatted.dropFirst())
+        }
+
+        assert(hexFormatted.count == 6, "Invalid hex code used.")
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
+
+        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+                  alpha: alpha)
     }
 }
